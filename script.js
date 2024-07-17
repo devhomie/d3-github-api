@@ -1,3 +1,26 @@
+const width = 600;
+const height = 400;
+
+let svg = d3
+  .select("body")
+  .append("svg")
+  .attr("width", width)
+  .attr("height", height);
+
+let margin = { top: 20, right: 10, bottom: 20, left: 50 };
+
+// Bottom axis container
+let bottomContainer = svg
+  .append("g")
+  .attr("id", "bottom")
+  .attr("transform", `translate(0, ${height - margin.bottom})`);
+
+// Left axis container
+let leftContainer = svg
+  .append("g")
+  .attr("id", "left")
+  .attr("transform", `transale(${margin.left}, 0)`);
+
 function getUrl() {
   let baseURL = "https://api.github.com/search/repositories";
 
