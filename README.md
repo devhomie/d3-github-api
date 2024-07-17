@@ -57,3 +57,9 @@ Wed Jul 17 05:53:16 EDT 2024
  - To create our chart, we first have to create the svg element that will hold it and
    the two `g` elements for the axes.
      - In this case, the axes will be on the bottom and left sides
+
+### Drawing the Axes
+
+ - Witht he elements created, we can make a start on the `update` function, which will
+   draw the visualization.
+   - First, create the scales based on the `data` and draw the axes.
