@@ -52,3 +52,8 @@ Wed Jul 17 05:53:16 EDT 2024
          is ready.
        - D3 converts the JSON response string into a JavaScript object, so `data`
          will be an object
+
+### Creating the  Elements
+ - To create our chart, we first have to create the svg element that will hold it and
+   the two `g` elements for the axes.
+     - In this case, the axes will be on the bottom and left sides

@@ -20,6 +20,6 @@ let url = getUrl();
 
 console.log(url);
 
-d3.json(url).then(data => {
-    console.log(data);
+d3.json(url).then((data) => {
+  console.log(data);
 });
