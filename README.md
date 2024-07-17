@@ -39,3 +39,16 @@ Wed Jul 17 05:53:16 EDT 2024
     #### Creating the URL
     - To simplify things, we'll write a function that takes an object with the unecoded query
       string parameters and converts it to a properly formatted and encoded URL.
+    
+    #### Fetching JSON data
+     - To bring the JSON data into your application you can use D3's json helper method
+       -> `d3.json(url)`
+       - Which fetches JSON from a given URL
+       - Fetching a bunch of data from an API may take a little time, so the
+         d3.json method returns a Promise,
+         - A type of object that represents something that will be available in
+           the future.
+       - The `.then` method takes a function that will be called when the data
+         is ready.
+       - D3 converts the JSON response string into a JavaScript object, so `data`
+         will be an object
