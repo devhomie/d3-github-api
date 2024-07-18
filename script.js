@@ -21,6 +21,26 @@ let leftContainer = svg
   .attr("id", "left")
   .attr("transform", `transale(${margin.left}, 0)`);
 
+function update(items) {
+  let xScale = d3
+    .scaleBand()
+    .domain(items.map((d) => d.full_name))
+    .range([margin.left, width - margin.right])
+    .padding(0.3);
+
+  let yScale = d3
+    .scaleLinear()
+    .domain([0, d3.max(items, (d) => d.stargazers_count)])
+    .range([height - margin.bottom, margin.top])
+    .nice();
+
+  let bottomAxis = d3.axisBottom(xScale);
+  let leftAxis = d3.axisLeft(yScale);
+
+  bottomContainer.call(bottomAxis);
+  leftContainer.call(leftAxis);
+}
+
 function getUrl() {
   let baseURL = "https://api.github.com/search/repositories";
 
@@ -45,4 +65,5 @@ console.log(url);
 
 d3.json(url).then((data) => {
   console.log(data);
+  update(data.items);
 });
