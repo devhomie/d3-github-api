@@ -21,10 +21,10 @@ let leftContainer = svg
   .attr("id", "left")
   .attr("transform", `translate(${margin.left}, 0)`);
 
-function getLicense(d){
+function getLicense(d) {
   let license = d.license?.name;
 
-  if(!license){
+  if (!license) {
     return "No License";
   } else {
     return license;
@@ -32,10 +32,12 @@ function getLicense(d){
 }
 
 function update(items) {
+  let licenses = new Set(items.map((d) => getLicense(d)));
 
-  let licenses = new Set(items.map(d => getLicense(d)));
-
-  let colorScale = d3.scaleOrdinal().domain(licenses).range(d3.schemeCategory10);
+  let colorScale = d3
+    .scaleOrdinal()
+    .domain(licenses)
+    .range(d3.schemeCategory10);
 
   let xScale = d3
     .scaleBand()
@@ -61,14 +63,28 @@ function update(items) {
     .join("rect")
     .attr("x", (d) => xScale(d.full_name))
     .attr("y", (d) => yScale(d.stargazers_count))
-    .attr("fill", d => colorScale(getLicense(d)))
+    .attr("fill", (d) => colorScale(getLicense(d)))
     .attr("width", xScale.bandwidth())
     .attr("height", (d) => yScale(0) - yScale(d.stargazers_count))
-    .on("mouseover", (e,d) =>{
+    .on("mouseover", (e, d) => {
       let info = d3.select("#info");
       info.select(".repo .value a").text(d.full_name).attr("href", d.html_url);
       info.select(".license .value").text(getLicense(d));
       info.select(".stars .value").text(d.stargazers_count);
+    });
+
+  d3.select("#key")
+    .selectAll("p")
+    .data(licenses)
+    .join((enter) => {
+      let p = enter.append("p");
+      p.append("div")
+        .attr("class", "color")
+        .style("background-color", (d) => colorScale(d));
+
+      p.append("span").text((d) => d);
+
+      return p;
     });
 }
 
