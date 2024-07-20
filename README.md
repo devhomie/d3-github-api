@@ -63,3 +63,10 @@ Wed Jul 17 05:53:16 EDT 2024
  - Witht he elements created, we can make a start on the `update` function, which will
    draw the visualization.
    - First, create the scales based on the `data` and draw the axes.
+
+### Improving the Visualization
+
+- We'll implement some improvements to make the visualization more meaningful
+- We'll create a way to see more information about each repository and color-code
+  the bars to show each repository's license type.
+- Also make sure the axes are properly labeled.
