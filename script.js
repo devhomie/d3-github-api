@@ -21,10 +21,15 @@ let leftContainer = svg
   .attr("id", "left")
   .attr("transform", `translate(${margin.left}, 0)`);
 
-let chartHeight = (height - margin.bottom) - margin.top;
+let chartHeight = height - margin.bottom - margin.top;
 let midPoint = margin.top + chartHeight / 2;
 
-svg.append("text").text("Stars").style("font-size", "14px").attr("text-anchor", "middle").attr("transform", `translate(12, ${midPoint}) rotate(270)`);
+svg
+  .append("text")
+  .text("Stars")
+  .style("font-size", "14px")
+  .attr("text-anchor", "middle")
+  .attr("transform", `translate(12, ${midPoint}) rotate(270)`);
 
 function getLicense(d) {
   let license = d.license?.name;
