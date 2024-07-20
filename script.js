@@ -57,13 +57,13 @@ let filtered = items.filter(d => !hiddenLicenses.has(getLicense(d)));
 
   let xScale = d3
     .scaleBand()
-    .domain(items.map((d) => d.full_name))
+    .domain(filtered.map((d) => d.full_name))
     .range([margin.left, width - margin.right])
     .padding(0.4);
 
   let yScale = d3
     .scaleLinear()
-    .domain([0, d3.max(items, (d) => d.stargazers_count)])
+    .domain([0, d3.max(filtered, (d) => d.stargazers_count)])
     .range([height - margin.bottom, margin.top])
     .nice();
 
@@ -75,7 +75,7 @@ let filtered = items.filter(d => !hiddenLicenses.has(getLicense(d)));
 
   svg
     .selectAll("rect")
-    .data(items, (d) => d.full_name)
+    .data(filtered, (d) => d.full_name)
     .join("rect")
     .attr("x", (d) => xScale(d.full_name))
     .attr("y", (d) => yScale(d.stargazers_count))
