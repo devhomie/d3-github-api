@@ -57,7 +57,13 @@ function update(items) {
     .attr("x", (d) => xScale(d.full_name))
     .attr("y", (d) => yScale(d.stargazers_count))
     .attr("width", xScale.bandwidth())
-    .attr("height", (d) => yScale(0) - yScale(d.stargazers_count));
+    .attr("height", (d) => yScale(0) - yScale(d.stargazers_count))
+    .on("mouseover", (e,d) =>{
+      let info = d3.select("#info");
+      info.select(".repo .value a").text(d.full_name).attr("href", d.html_url);
+      info.select(".license .value").text(getLicense(d));
+      info.select(".stars .value").text(d.stargazers_count);
+    });
 }
 
 function getUrl() {
