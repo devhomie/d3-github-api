@@ -34,8 +34,8 @@ function update(items) {
     .range([height - margin.bottom, margin.top])
     .nice();
 
-  let bottomAxis = d3.axisBottom(xScale);
-  let leftAxis = d3.axisLeft(yScale);
+  let bottomAxis = d3.axisBottom(xScale).tickValues([]);
+  let leftAxis = d3.axisLeft(yScale).tickFormat(d3.format("~s"));
 
   bottomContainer.call(bottomAxis);
   leftContainer.call(leftAxis);
