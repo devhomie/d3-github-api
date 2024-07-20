@@ -41,6 +41,8 @@ function getLicense(d) {
   }
 }
 
+let hiddenLicenses = new Set();
+
 function update(items) {
   let licenses = new Set(items.map((d) => getLicense(d)));
 
@@ -98,6 +100,16 @@ function update(items) {
       p.append("span").text((d) => d);
 
       return p;
+    });
+
+    d3.selectAll("#key input").on("change", (e, d) => {
+      if (e.target.checked){
+        hiddenLicenses.delete(d);
+      } else {
+        hiddenLicenses.add(d);
+      }
+      console.log(hiddenLicenses);
+      update(items);
     });
 }
 
