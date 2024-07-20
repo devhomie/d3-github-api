@@ -21,6 +21,16 @@ let leftContainer = svg
   .attr("id", "left")
   .attr("transform", `translate(${margin.left}, 0)`);
 
+function getLicense(d){
+  let license = d.license?.name;
+
+  if(!license){
+    return "No License";
+  } else {
+    return license;
+  }
+}
+
 function update(items) {
   let xScale = d3
     .scaleBand()
