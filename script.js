@@ -88,6 +88,9 @@ function update(items) {
     .data(licenses)
     .join((enter) => {
       let p = enter.append("p");
+
+      p.append("input").attr("type", "checkbox").attr("checked", true).attr("title", "Include in chart");
+
       p.append("div")
         .attr("class", "color")
         .style("background-color", (d) => colorScale(d));
