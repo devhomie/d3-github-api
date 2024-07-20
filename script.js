@@ -61,6 +61,7 @@ function update(items) {
     .join("rect")
     .attr("x", (d) => xScale(d.full_name))
     .attr("y", (d) => yScale(d.stargazers_count))
+    .attr("fill", d => colorScale(getLicense(d)))
     .attr("width", xScale.bandwidth())
     .attr("height", (d) => yScale(0) - yScale(d.stargazers_count))
     .on("mouseover", (e,d) =>{
