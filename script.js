@@ -19,14 +19,14 @@ let bottomContainer = svg
 let leftContainer = svg
   .append("g")
   .attr("id", "left")
-  .attr("transform", `transale(${margin.left}, 0)`);
+  .attr("transform", `translate(${margin.left}, 0)`);
 
 function update(items) {
   let xScale = d3
     .scaleBand()
     .domain(items.map((d) => d.full_name))
     .range([margin.left, width - margin.right])
-    .padding(0.3);
+    .padding(0.4);
 
   let yScale = d3
     .scaleLinear()
