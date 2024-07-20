@@ -32,6 +32,11 @@ function getLicense(d){
 }
 
 function update(items) {
+
+  let licenses = new Set(items.map(d => getLicense(d)));
+
+  let colorScale = d3.scaleOrdinal().domain(licenses).range(d3.schemeCategory10);
+
   let xScale = d3
     .scaleBand()
     .domain(items.map((d) => d.full_name))
