@@ -44,9 +44,8 @@ function getLicense(d) {
 let hiddenLicenses = new Set();
 
 function update(items) {
-
-// Items with the hidden licenses removed
-let filtered = items.filter(d => !hiddenLicenses.has(getLicense(d)));
+  // Items with the hidden licenses removed
+  let filtered = items.filter((d) => !hiddenLicenses.has(getLicense(d)));
 
   let licenses = new Set(items.map((d) => getLicense(d)));
 
@@ -71,23 +70,36 @@ let filtered = items.filter(d => !hiddenLicenses.has(getLicense(d)));
   let bottomAxis = d3.axisBottom(xScale).tickValues([]);
 
   bottomContainer.call(bottomAxis);
-  leftContainer.call(leftAxis);
+  leftContainer.transition().call(leftAxis);
 
   svg
     .selectAll("rect")
     .data(filtered, (d) => d.full_name)
-    .join("rect")
-    .attr("x", (d) => xScale(d.full_name))
-    .attr("y", (d) => yScale(d.stargazers_count))
-    .attr("fill", (d) => colorScale(getLicense(d)))
-    .attr("width", xScale.bandwidth())
-    .attr("height", (d) => yScale(0) - yScale(d.stargazers_count))
-    .on("mouseover", (e, d) => {
+    .join((enter) =>
+      enter
+        .append("rect")
+        .attr("x", (d) => xScale(d.full_name))
+        .attr("y", (d) => yScale(d.stargazers_count))
+        .attr("fill", (d) => colorScale(getLicense(d)))
+        .attr("width", xScale.bandwidth())
+        .attr("height", (d) => yScale(0) - yScale(d.stargazers_count))
+        .style("opacity", 0)
+        .transition()
+        .style("opacity", 1),
+      update => update.transition().attr("x", (d) => xScale(d.full_name))
+        .attr("y", (d) => yScale(d.stargazers_count))
+        .attr("width", xScale.bandwidth())
+        .attr("height", (d) => yScale(0) - yScale(d.stargazers_count)),
+      exit => exit.transition().style("opacity", 0).remove()
+
+    ).on("mouseover", (e, d) => {
       let info = d3.select("#info");
       info.select(".repo .value a").text(d.full_name).attr("href", d.html_url);
       info.select(".license .value").text(getLicense(d));
       info.select(".stars .value").text(d.stargazers_count);
     });
+
+    
 
   d3.select("#key")
     .selectAll("p")
@@ -95,7 +107,10 @@ let filtered = items.filter(d => !hiddenLicenses.has(getLicense(d)));
     .join((enter) => {
       let p = enter.append("p");
 
-      p.append("input").attr("type", "checkbox").attr("checked", true).attr("title", "Include in chart");
+      p.append("input")
+        .attr("type", "checkbox")
+        .attr("checked", true)
+        .attr("title", "Include in chart");
 
       p.append("div")
         .attr("class", "color")
@@ -106,15 +121,15 @@ let filtered = items.filter(d => !hiddenLicenses.has(getLicense(d)));
       return p;
     });
 
-    d3.selectAll("#key input").on("change", (e, d) => {
-      if (e.target.checked){
-        hiddenLicenses.delete(d);
-      } else {
-        hiddenLicenses.add(d);
-      }
-      console.log(hiddenLicenses);
-      update(items);
-    });
+  d3.selectAll("#key input").on("change", (e, d) => {
+    if (e.target.checked) {
+      hiddenLicenses.delete(d);
+    } else {
+      hiddenLicenses.add(d);
+    }
+    console.log(hiddenLicenses);
+    update(items);
+  });
 }
 
 function getUrl() {
