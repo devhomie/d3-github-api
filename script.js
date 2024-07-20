@@ -34,11 +34,20 @@ function update(items) {
     .range([height - margin.bottom, margin.top])
     .nice();
 
-  let bottomAxis = d3.axisBottom(xScale).tickValues([]);
   let leftAxis = d3.axisLeft(yScale).tickFormat(d3.format("~s"));
+  let bottomAxis = d3.axisBottom(xScale).tickValues([]);
 
   bottomContainer.call(bottomAxis);
   leftContainer.call(leftAxis);
+
+  svg
+    .selectAll("rect")
+    .data(items, (d) => d.full_name)
+    .join("rect")
+    .attr("x", (d) => xScale(d.full_name))
+    .attr("y", (d) => yScale(d.stargazers_count))
+    .attr("width", xScale.bandwidth())
+    .attr("height", (d) => yScale(0) - yScale(d.stargazers_count));
 }
 
 function getUrl() {
