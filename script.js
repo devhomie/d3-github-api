@@ -44,6 +44,10 @@ function getLicense(d) {
 let hiddenLicenses = new Set();
 
 function update(items) {
+
+// Items with the hidden licenses removed
+let filtered = items.filter(d => !hiddenLicenses.has(getLicense(d)));
+
   let licenses = new Set(items.map((d) => getLicense(d)));
 
   let colorScale = d3
