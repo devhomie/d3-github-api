@@ -3,7 +3,7 @@ const height = 400;
 
 let svg = d3
   .select("body")
-  .append("svg")
+  .insert("svg", "#sidebar")
   .attr("width", width)
   .attr("height", height);
 
